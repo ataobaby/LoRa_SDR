@@ -32,7 +32,8 @@ if Fs == Bandwidth
     signal_demod        = awgn(signal,SNR,'measured') ;
 else
     signal_freq_demod   = signal.*exp(j.*2.*pi.*df./Fs.*(0:length(signal)-1))' ;
-    signal_filter       = lowpass(signal_freq_demod,Bandwidth,Fs) ;
+    signal_filter = signal_freq_demod;
+% %     signal_filter       = lowpass(signal_freq_demod,Bandwidth,Fs) ;
     signal_demod        = awgn(resample(signal_filter,Bandwidth,Fs),SNR,'measured') ;
 end
 
