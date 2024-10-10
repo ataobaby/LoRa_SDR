@@ -1,11 +1,13 @@
 function preambleStartLocation = signalCapture(inputSignal,upChirp,upChirpNum,FrameLength)
+    % upChirp = [upChirp; upChirp; upChirp; upChirp];
     K = length(upChirp);
     windowLength = ceil(0.5*FrameLength + upChirpNum*length(upChirp));
 
     % Cross correlate
     rWin = inputSignal;
     Phat = abs(xcorr(rWin, upChirp));
-    
+    Rhat = xcorr(abs(rWin), ones(K,1));
+    Phat = Phat./Rhat;
 
     % Remove leading and tail zeros overlaps
     M = Phat(ceil(length(Phat)/2):end-K/2+1);
